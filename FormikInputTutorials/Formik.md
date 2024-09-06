@@ -88,6 +88,105 @@ export default MyForm;
 
 
 
+In Formik, the `ErrorMessage` component is used to display validation error messages for form fields. It provides a simple way to show error messages based on the validation schema or field-specific validation rules. Here's an in-depth look at how it works and how to use it:
+
+## `ErrorMessage` Component in Formik
+
+### Overview
+
+The `ErrorMessage` component is used to render error messages for a specific form field. It subscribes to Formik's context and automatically displays any validation errors associated with that field.
+
+### Usage
+
+To use `ErrorMessage`, you need to provide the name of the field for which you want to display the error message. Formik will automatically pull the error message from the validation errors object.
+
+#### Basic Example
+
+Here’s a basic example of how to use `ErrorMessage` in a Formik form:
+
+```jsx
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .required('Username is required')
+    .min(2, 'Username must be at least 2 characters long'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required')
+});
+
+const MyForm = () => (
+  <Formik
+    initialValues={{ username: '', email: '' }}
+    validationSchema={validationSchema}
+    onSubmit={(values) => {
+      console.log(values);
+    }}
+  >
+    <Form>
+      <div>
+        <label htmlFor="username">Username</label>
+        <Field type="text" id="username" name="username" />
+        <ErrorMessage name="username" component="div" className="error" />
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
+        <Field type="text" id="email" name="email" />
+        <ErrorMessage name="email" component="div" className="error" />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default MyForm;
+```
+
+### Props
+
+- **`name`**: The name of the field for which you want to display an error message. This should match the field name in your Formik form.
+- **`component`**: The type of element to render. By default, it renders a `<div>`. You can specify other HTML elements or React components.
+- **`render`**: A function that takes the error message as an argument and returns the JSX to render. This is useful for custom rendering logic.
+- **`className`**: CSS class to apply to the error message. This allows you to style the error message.
+
+### Custom Rendering
+
+You can use the `render` prop to customize how the error message is displayed:
+
+```jsx
+<ErrorMessage
+  name="username"
+  render={msg => <div style={{ color: 'red' }}>{msg}</div>}
+/>
+```
+
+### Integration with Custom Components
+
+If you're using custom components for form fields, you can still use `ErrorMessage` by ensuring your custom component's name prop matches the field name:
+
+```jsx
+const CustomInput = ({ field, form }) => (
+  <div>
+    <input {...field} />
+    <ErrorMessage name={field.name} component="div" className="error" />
+  </div>
+);
+```
+
+### Summary
+
+- **`ErrorMessage`** in Formik is a component designed to display validation error messages for form fields.
+- It requires a `name` prop to specify which field's error message to display.
+- You can customize its rendering using the `component` or `render` props.
+- It integrates seamlessly with Formik's form management and validation logic.
+
+The `ErrorMessage` component simplifies error handling in forms, ensuring that users receive immediate feedback about any validation issues.
+
+
+
 
 
 # Text Input Formik Component
