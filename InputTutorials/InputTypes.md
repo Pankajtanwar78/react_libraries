@@ -1,5 +1,3 @@
-# HiddenInput.md
-
 # Hidden Input
 
 **Mandatory Fields:**
@@ -36,8 +34,6 @@ export default HiddenInput;
 
 
 
-
-# PasswordInput.md
 
 # Password Input
 
@@ -102,8 +98,6 @@ export default PasswordInput;
 
 
 
-# TelephoneInput.md
-
 # Telephone Input
 
 **Mandatory Fields:**
@@ -164,8 +158,6 @@ export default TelephoneInput;
 
 
 
-# ColorInput.md
-
 # Color Input
 
 **Mandatory Fields:**
@@ -222,8 +214,6 @@ export default ColorInput;
 
 
 
-
-# MonthInput.md
 
 # Month Input
 
@@ -285,8 +275,6 @@ export default MonthInput;
 
 
 
-
-# EmailInput.md
 
 # Email Input
 
@@ -350,8 +338,6 @@ export default EmailInput;
 
 
 
-# TextInput.md
-
 # Text Input
 
 **Mandatory Fields:**
@@ -414,8 +400,6 @@ export default TextInput;
 
 
 
-
-# RadioInput.md
 
 # Radio Input
 
@@ -481,8 +465,6 @@ export default RadioInput;
 
 
 
-
-# RangeInput.md
 
 # Range Input
 
@@ -552,8 +534,6 @@ export default RangeInput;
 
 
 
-
-# NumberInput.md
 
 # Number Input
 
@@ -625,8 +605,6 @@ export default NumberInput;
 
 
 
-# TextAreaInput.md
-
 # Textarea Input
 
 **Mandatory Fields:**
@@ -686,8 +664,6 @@ export default TextareaInput;
 
 
 
-
-# TimeInput.md
 
 # Time Input
 
@@ -750,8 +726,6 @@ export default TimeInput;
 
 
 
-# DateInput.md
-
 # Date Input
 
 **Mandatory Fields:**
@@ -812,8 +786,6 @@ export default DateInput;
 
 
 
-
-# CheckboxInput.md
 
 # Checkbox Input
 
@@ -885,8 +857,6 @@ export default CheckboxInput;
 
 
 
-# FileInput.md
-
 # File Input
 
 **Mandatory Fields:**
@@ -950,8 +920,6 @@ export default FileInput;
 
 
 
-# UrlInput.md
-
 # URL Input
 
 **Mandatory Fields:**
@@ -1009,8 +977,6 @@ export default URLInput;
 
 
 
-
-# WeekInput.md
 
 # Week Input
 
@@ -1072,8 +1038,6 @@ export default WeekInput;
 
 
 
-
-# SelectInput.md
 
 
 ### Select Input
@@ -1146,8 +1110,6 @@ export default SelectInput;
 
 
 
-
-# SearchInput.md
 
 # Search Input
 
