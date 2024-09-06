@@ -103,66 +103,28 @@ HTML `<input>` elements come with a variety of attributes that control their beh
 
 
 
-
-# Hidden Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input (for accessibility, although hidden inputs don't display).
-- `name`: For form submission.
-- `value`: Controls hidden input value.
-
-**Nice-to-Have Fields:**
-- `defaultValue`: Sets the initial value.
-
-# HiddenInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const HiddenInput: React.FC = () => {
-  const [value, setValue] = useState<string>('hiddenValue');
-
-  return (
-    <div>
-      <label htmlFor="hiddenInput" style={{ display: 'none' }}>Hidden Input:</label>
-      <input
-        type="hidden"
-        id="hiddenInput"
-        name="hiddenInput"
-        value={value}
-      />
-    </div>
-  );
-};
-
-export default HiddenInput;
-```
-
-
-
-
-# Password Input
+# Text Input
 
 **Mandatory Fields:**
 - `id`: Associates label with input.
 - `name`: For form submission.
 - `value`: Controls input value.
 - `onChange`: Updates state.
-- `type="password"`: Provides a password input field.
+- `type="text"`: Provides a text input field.
 - `onBlur`: Handles focus loss event.
 
 **Nice-to-Have Fields:**
 - `placeholder`: Provides a hint to the user about the expected value.
 - `required`: Marks the field as mandatory.
-- `minLength`: Requires a minimum number of characters.
 - `maxLength`: Limits the number of characters.
+- `minLength`: Requires a minimum number of characters.
 
-# PasswordInput.tsx
+# TextInput.tsx
 
 ```typescript
 import React, { useState } from 'react';
 
-const PasswordInput: React.FC = () => {
+const TextInput: React.FC = () => {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
@@ -171,186 +133,7 @@ const PasswordInput: React.FC = () => {
   };
 
   const handleBlur = () => {
-    if (value.length < 6) {
-      setError('Password must be at least 6 characters long.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="passwordInput">Password Input:</label>
-      <input
-        type="password"
-        id="passwordInput"
-        name="passwordInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter password"
-        required
-        minLength={6}
-        maxLength={20}
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default PasswordInput;
-```
-
-
-
-
-# Telephone Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls phone number input.
-- `onChange`: Updates state.
-- `type="tel"`: Provides a telephone input field.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
-- `pattern`: Specifies a regex pattern for validation.
-
-# TelephoneInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const TelephoneInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    const phoneRegex = /^[0-9]{10}$/; // Example: 10-digit phone number
-    if (!phoneRegex.test(value)) {
-      setError('Please enter a valid phone number.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="telephoneInput">Telephone Input:</label>
-      <input
-        type="tel"
-        id="telephoneInput"
-        name="telephoneInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter phone number"
-        pattern="[0-9]{10}"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default TelephoneInput;
-```
-
-
-
-
-# Color Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected color.
-- `onChange`: Updates state.
-- `type="color"`: Provides a color picker.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
-
-# ColorInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const ColorInput: React.FC = () => {
-  const [value, setValue] = useState<string>('#ff0000');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    if (!/^#[0-9a-fA-F]{6}$/.test(value)) {
-      setError('Please enter a valid hex color.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="colorInput">Color Input:</label>
-      <input
-        type="color"
-        id="colorInput"
-        name="colorInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select color"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default ColorInput;
-```
-
-
-
-
-# Month Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected month.
-- `onChange`: Updates state.
-- `type="month"`: Provides a month picker.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the earliest month.
-- `max`: Specifies the latest month.
-- `placeholder`: Provides a hint to the user.
-
-# MonthInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const MonthInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    if (!value) {
+    if (value.trim() === '') {
       setError('This field is required.');
     } else {
       setError(null);
@@ -359,24 +142,25 @@ const MonthInput: React.FC = () => {
 
   return (
     <div>
-      <label htmlFor="monthInput">Month Input:</label>
+      <label htmlFor="textInput">Text Input:</label>
       <input
-        type="month"
-        id="monthInput"
-        name="monthInput"
+        type="text"
+        id="textInput"
+        name="textInput"
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
-        placeholder="Select month"
-        min="2020-01"
-        max="2099-12"
+        placeholder="Enter text"
+        required
+        maxLength={100}
+        minLength={3}
       />
       {error && <span style={{ color: 'red' }}>{error}</span>}
     </div>
   );
 };
 
-export default MonthInput;
+export default TextInput;
 ```
 
 
@@ -444,28 +228,28 @@ export default EmailInput;
 
 
 
-# Text Input
+# Password Input
 
 **Mandatory Fields:**
 - `id`: Associates label with input.
 - `name`: For form submission.
 - `value`: Controls input value.
 - `onChange`: Updates state.
-- `type="text"`: Provides a text input field.
+- `type="password"`: Provides a password input field.
 - `onBlur`: Handles focus loss event.
 
 **Nice-to-Have Fields:**
 - `placeholder`: Provides a hint to the user about the expected value.
 - `required`: Marks the field as mandatory.
-- `maxLength`: Limits the number of characters.
 - `minLength`: Requires a minimum number of characters.
+- `maxLength`: Limits the number of characters.
 
-# TextInput.tsx
+# PasswordInput.tsx
 
 ```typescript
 import React, { useState } from 'react';
 
-const TextInput: React.FC = () => {
+const PasswordInput: React.FC = () => {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
@@ -474,8 +258,8 @@ const TextInput: React.FC = () => {
   };
 
   const handleBlur = () => {
-    if (value.trim() === '') {
-      setError('This field is required.');
+    if (value.length < 6) {
+      setError('Password must be at least 6 characters long.');
     } else {
       setError(null);
     }
@@ -483,159 +267,25 @@ const TextInput: React.FC = () => {
 
   return (
     <div>
-      <label htmlFor="textInput">Text Input:</label>
+      <label htmlFor="passwordInput">Password Input:</label>
       <input
-        type="text"
-        id="textInput"
-        name="textInput"
+        type="password"
+        id="passwordInput"
+        name="passwordInput"
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
-        placeholder="Enter text"
+        placeholder="Enter password"
         required
-        maxLength={100}
-        minLength={3}
+        minLength={6}
+        maxLength={20}
       />
       {error && <span style={{ color: 'red' }}>{error}</span>}
     </div>
   );
 };
 
-export default TextInput;
-```
-
-
-
-
-# Radio Input
-
-**Mandatory Fields:**
-- `id`: Associates label with radio button.
-- `name`: Groups radio buttons together.
-- `value`: Specifies the value of the radio button.
-- `checked`: Controls the selected state of the radio button.
-- `onChange`: Updates state.
-- `type="radio"`: Provides a radio button input.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `disabled`: Disables the radio button.
-
-# RadioInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-interface RadioInputProps {
-  options: { id: string; name: string; value: string; checked: boolean; disabled?: boolean }[];
-}
-
-const RadioInput: React.FC<RadioInputProps> = ({ options }) => {
-  const [selectedValue, setSelectedValue] = useState<string>(options.find(option => option.checked)?.value || '');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    // Optional: Implement specific validation or checks if needed
-  };
-
-  return (
-    <div>
-      {options.map((option) => (
-        <div key={option.id}>
-          <label>
-            <input
-              type="radio"
-              id={option.id}
-              name="radioGroup"
-              value={option.value}
-              checked={selectedValue === option.value}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              disabled={option.disabled}
-            />
-            {option.name}
-          </label>
-        </div>
-      ))}
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default RadioInput;
-```
-
-
-
-
-# Range Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls slider position.
-- `onChange`: Updates state.
-- `type="range"`: Provides a slider.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the minimum value.
-- `max`: Specifies the maximum value.
-- `step`: Defines the step size for increments.
-- `defaultValue`: Sets the initial value.
-
-# RangeInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const RangeInput: React.FC = () => {
-  const [value, setValue] = useState<number>(50);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.valueAsNumber;
-    if (newValue >= 0 && newValue <= 100) {
-      setValue(newValue);
-      setError(null);
-    } else {
-      setError('Value out of range.');
-    }
-  };
-
-  const handleBlur = () => {
-    if (value < 0 || value > 100) {
-      setError('Value must be between 0 and 100.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="rangeInput">Range Input:</label>
-      <input
-        type="range"
-        id="rangeInput"
-        name="rangeInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        min={0}
-        max={100}
-        step={1}
-      />
-      <span>{value}</span>
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default RangeInput;
+export default PasswordInput;
 ```
 
 
@@ -711,188 +361,6 @@ export default NumberInput;
 
 
 
-# Textarea Input
-
-**Mandatory Fields:**
-- `id`: Associates label with textarea.
-- `name`: For form submission.
-- `value`: Controls textarea value.
-- `onChange`: Updates state.
-- `rows`: Specifies the number of visible text lines.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
-- `cols`: Specifies the visible width of the textarea.
-- `maxLength`: Limits the number of characters.
-
-# TextareaInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const TextareaInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="textareaInput">Textarea Input:</label>
-      <textarea
-        id="textareaInput"
-        name="textareaInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        rows={4}
-        placeholder="Enter text"
-        maxLength={500}
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default TextareaInput;
-```
-
-
-
-
-# Time Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected time.
-- `onChange`: Updates state.
-- `type="time"`: Provides a time picker.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the earliest time.
-- `max`: Specifies the latest time.
-- `placeholder`: Provides a hint to the user.
-
-# TimeInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const TimeInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="timeInput">Time Input:</label>
-      <input
-        type="time"
-        id="timeInput"
-        name="timeInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select time"
-        min="00:00"
-        max="23:59"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default TimeInput;
-```
-
-
-
-
-# Date Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected date.
-- `onChange`: Updates state.
-- `type="date"`: Provides a date picker.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the earliest date.
-- `max`: Specifies the latest date.
-- `placeholder`: Provides a hint to the user.
-
-# DateInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const DateInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="dateInput">Date Input:</label>
-      <input
-        type="date"
-        id="dateInput"
-        name="dateInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select date"
-        min="2000-01-01"
-        max="2099-12-31"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default DateInput;
-```
-
-
-
-
 # Checkbox Input
 
 **Mandatory Fields:**
@@ -963,183 +431,66 @@ export default CheckboxInput;
 
 
 
-# File Input
+# Radio Input
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `onChange`: Updates state when file is selected.
-- `type="file"`: Allows file selection.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `accept`: Specifies acceptable file types.
-- `multiple`: Allows selection of multiple files.
-
-# FileInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const FileInput: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files ? event.target.files[0] : null;
-    if (selectedFile) {
-      setFile(selectedFile);
-      setError(null);
-    } else {
-      setError('No file selected.');
-    }
-  };
-
-  const handleBlur = () => {
-    if (!file) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="fileInput">File Input:</label>
-      <input
-        type="file"
-        id="fileInput"
-        name="fileInput"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        accept=".jpg,.png,.pdf"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-      {file && <p>Selected file: {file.name}</p>}
-    </div>
-  );
-};
-
-export default FileInput;
-```
-
-
-
-
-# URL Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls URL input.
+- `id`: Associates label with radio button.
+- `name`: Groups radio buttons together.
+- `value`: Specifies the value of the radio button.
+- `checked`: Controls the selected state of the radio button.
 - `onChange`: Updates state.
-- `type="url"`: Provides a URL input field.
+- `type="radio"`: Provides a radio button input.
 - `onBlur`: Handles focus loss event.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
+- `disabled`: Disables the radio button.
 
-# URLInput.tsx
+# RadioInput.tsx
 
 ```typescript
 import React, { useState } from 'react';
 
-const URLInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
+interface RadioInputProps {
+  options: { id: string; name: string; value: string; checked: boolean; disabled?: boolean }[];
+}
+
+const RadioInput: React.FC<RadioInputProps> = ({ options }) => {
+  const [selectedValue, setSelectedValue] = useState<string>(options.find(option => option.checked)?.value || '');
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    setSelectedValue(event.target.value);
   };
 
   const handleBlur = () => {
-    try {
-      new URL(value);
-      setError(null);
-    } catch {
-      setError('Please enter a valid URL.');
-    }
+    // Optional: Implement specific validation or checks if needed
   };
 
   return (
     <div>
-      <label htmlFor="urlInput">URL Input:</label>
-      <input
-        type="url"
-        id="urlInput"
-        name="urlInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter URL"
-      />
+      {options.map((option) => (
+        <div key={option.id}>
+          <label>
+            <input
+              type="radio"
+              id={option.id}
+              name="radioGroup"
+              value={option.value}
+              checked={selectedValue === option.value}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              disabled={option.disabled}
+            />
+            {option.name}
+          </label>
+        </div>
+      ))}
       {error && <span style={{ color: 'red' }}>{error}</span>}
     </div>
   );
 };
 
-export default URLInput;
-```
-
-
-
-
-# Week Input
-
-**Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected week.
-- `onChange`: Updates state.
-- `type="week"`: Provides a week picker.
-- `onBlur`: Handles focus loss event.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the earliest week.
-- `max`: Specifies the latest week.
-- `placeholder`: Provides a hint to the user.
-
-# WeekInput.tsx
-
-```typescript
-import React, { useState } from 'react';
-
-const WeekInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="weekInput">Week Input:</label>
-      <input
-        type="week"
-        id="weekInput"
-        name="weekInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select week"
-        min="2020-W01"
-        max="2099-W52"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default WeekInput;
+export default RadioInput;
 ```
 
 
@@ -1217,6 +568,196 @@ export default SelectInput;
 
 
 
+# Textarea Input
+
+**Mandatory Fields:**
+- `id`: Associates label with textarea.
+- `name`: For form submission.
+- `value`: Controls textarea value.
+- `onChange`: Updates state.
+- `rows`: Specifies the number of visible text lines.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `placeholder`: Provides a hint to the user.
+- `cols`: Specifies the visible width of the textarea.
+- `maxLength`: Limits the number of characters.
+
+# TextareaInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const TextareaInput: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!value) {
+      setError('This field is required.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="textareaInput">Textarea Input:</label>
+      <textarea
+        id="textareaInput"
+        name="textareaInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        rows={4}
+        placeholder="Enter text"
+        maxLength={500}
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default TextareaInput;
+```
+
+
+
+
+# Date Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls selected date.
+- `onChange`: Updates state.
+- `type="date"`: Provides a date picker.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest date.
+- `max`: Specifies the latest date.
+- `placeholder`: Provides a hint to the user.
+
+# DateInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const DateInput: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!value) {
+      setError('This field is required.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="dateInput">Date Input:</label>
+      <input
+        type="date"
+        id="dateInput"
+        name="dateInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Select date"
+        min="2000-01-01"
+        max="2099-12-31"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default DateInput;
+```
+
+
+
+
+# Range Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls slider position.
+- `onChange`: Updates state.
+- `type="range"`: Provides a slider.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the minimum value.
+- `max`: Specifies the maximum value.
+- `step`: Defines the step size for increments.
+- `defaultValue`: Sets the initial value.
+
+# RangeInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const RangeInput: React.FC = () => {
+  const [value, setValue] = useState<number>(50);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.valueAsNumber;
+    if (newValue >= 0 && newValue <= 100) {
+      setValue(newValue);
+      setError(null);
+    } else {
+      setError('Value out of range.');
+    }
+  };
+
+  const handleBlur = () => {
+    if (value < 0 || value > 100) {
+      setError('Value must be between 0 and 100.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="rangeInput">Range Input:</label>
+      <input
+        type="range"
+        id="rangeInput"
+        name="rangeInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        min={0}
+        max={100}
+        step={1}
+      />
+      <span>{value}</span>
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default RangeInput;
+```
+
+
+
+
 # Search Input
 
 **Mandatory Fields:**
@@ -1272,3 +813,465 @@ const SearchInput: React.FC = () => {
 
 export default SearchInput;
 ```
+
+
+
+
+# Time Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls selected time.
+- `onChange`: Updates state.
+- `type="time"`: Provides a time picker.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest time.
+- `max`: Specifies the latest time.
+- `placeholder`: Provides a hint to the user.
+
+# TimeInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const TimeInput: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!value) {
+      setError('This field is required.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="timeInput">Time Input:</label>
+      <input
+        type="time"
+        id="timeInput"
+        name="timeInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Select time"
+        min="00:00"
+        max="23:59"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default TimeInput;
+```
+
+
+
+
+# Color Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls selected color.
+- `onChange`: Updates state.
+- `type="color"`: Provides a color picker.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `placeholder`: Provides a hint to the user.
+
+# ColorInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const ColorInput: React.FC = () => {
+  const [value, setValue] = useState<string>('#ff0000');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!/^#[0-9a-fA-F]{6}$/.test(value)) {
+      setError('Please enter a valid hex color.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="colorInput">Color Input:</label>
+      <input
+        type="color"
+        id="colorInput"
+        name="colorInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Select color"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default ColorInput;
+```
+
+
+
+
+# File Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `onChange`: Updates state when file is selected.
+- `type="file"`: Allows file selection.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `accept`: Specifies acceptable file types.
+- `multiple`: Allows selection of multiple files.
+
+# FileInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const FileInput: React.FC = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files ? event.target.files[0] : null;
+    if (selectedFile) {
+      setFile(selectedFile);
+      setError(null);
+    } else {
+      setError('No file selected.');
+    }
+  };
+
+  const handleBlur = () => {
+    if (!file) {
+      setError('This field is required.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="fileInput">File Input:</label>
+      <input
+        type="file"
+        id="fileInput"
+        name="fileInput"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        accept=".jpg,.png,.pdf"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+      {file && <p>Selected file: {file.name}</p>}
+    </div>
+  );
+};
+
+export default FileInput;
+```
+
+
+
+
+# Month Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls selected month.
+- `onChange`: Updates state.
+- `type="month"`: Provides a month picker.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest month.
+- `max`: Specifies the latest month.
+- `placeholder`: Provides a hint to the user.
+
+# MonthInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const MonthInput: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!value) {
+      setError('This field is required.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="monthInput">Month Input:</label>
+      <input
+        type="month"
+        id="monthInput"
+        name="monthInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Select month"
+        min="2020-01"
+        max="2099-12"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default MonthInput;
+```
+
+
+
+
+# Week Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls selected week.
+- `onChange`: Updates state.
+- `type="week"`: Provides a week picker.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest week.
+- `max`: Specifies the latest week.
+- `placeholder`: Provides a hint to the user.
+
+# WeekInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const WeekInput: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    if (!value) {
+      setError('This field is required.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="weekInput">Week Input:</label>
+      <input
+        type="week"
+        id="weekInput"
+        name="weekInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Select week"
+        min="2020-W01"
+        max="2099-W52"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default WeekInput;
+```
+
+
+
+
+# Telephone Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls phone number input.
+- `onChange`: Updates state.
+- `type="tel"`: Provides a telephone input field.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `placeholder`: Provides a hint to the user.
+- `pattern`: Specifies a regex pattern for validation.
+
+# TelephoneInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const TelephoneInput: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    const phoneRegex = /^[0-9]{10}$/; // Example: 10-digit phone number
+    if (!phoneRegex.test(value)) {
+      setError('Please enter a valid phone number.');
+    } else {
+      setError(null);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="telephoneInput">Telephone Input:</label>
+      <input
+        type="tel"
+        id="telephoneInput"
+        name="telephoneInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Enter phone number"
+        pattern="[0-9]{10}"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default TelephoneInput;
+```
+
+
+
+
+# URL Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input.
+- `name`: For form submission.
+- `value`: Controls URL input.
+- `onChange`: Updates state.
+- `type="url"`: Provides a URL input field.
+- `onBlur`: Handles focus loss event.
+
+**Nice-to-Have Fields:**
+- `placeholder`: Provides a hint to the user.
+
+# URLInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const URLInput: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleBlur = () => {
+    try {
+      new URL(value);
+      setError(null);
+    } catch {
+      setError('Please enter a valid URL.');
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="urlInput">URL Input:</label>
+      <input
+        type="url"
+        id="urlInput"
+        name="urlInput"
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Enter URL"
+      />
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+    </div>
+  );
+};
+
+export default URLInput;
+```
+
+
+
+
+# Hidden Input
+
+**Mandatory Fields:**
+- `id`: Associates label with input (for accessibility, although hidden inputs don't display).
+- `name`: For form submission.
+- `value`: Controls hidden input value.
+
+**Nice-to-Have Fields:**
+- `defaultValue`: Sets the initial value.
+
+# HiddenInput.tsx
+
+```typescript
+import React, { useState } from 'react';
+
+const HiddenInput: React.FC = () => {
+  const [value, setValue] = useState<string>('hiddenValue');
+
+  return (
+    <div>
+      <label htmlFor="hiddenInput" style={{ display: 'none' }}>Hidden Input:</label>
+      <input
+        type="hidden"
+        id="hiddenInput"
+        name="hiddenInput"
+        value={value}
+      />
+    </div>
+  );
+};
+
+export default HiddenInput;
+```
+
+
+
+
