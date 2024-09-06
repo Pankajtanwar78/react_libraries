@@ -1,4 +1,4 @@
-# Comprehensive Guide to `<input>` Elements in React
+# `<input>` Elements in React
 
 ## Introduction
 
@@ -43,6 +43,13 @@ The `<input>` element supports numerous properties to control its behavior and a
   - Example:
     ```jsx
     <input type="checkbox" checked={isChecked} onChange={toggleCheckbox} />
+    ```
+
+- **`name`**:
+  - Assigns a name to the input element, which is used to identify the input in forms and can be used in form submission.
+  - Example:
+    ```jsx
+    <input type="text" name="username" value={username} onChange={handleUsernameChange} />
     ```
 
 - **`min`, `max`, `step`** (for `number`, `date`, `range`, etc.):
@@ -281,23 +288,23 @@ React allows you to programmatically interact with `<input>` elements using refs
   };
   ```
 
-- **`select()`**: Selects the text within the input.
+- **`select()`
+
+**: Selects the input's content.
   ```jsx
-  const selectText = () => {
+  const selectInput = () => {
     inputRef.current.select();
   };
   ```
 
-- **`setSelectionRange(start, end)`**: Sets a specific range for text selection.
+- **`setSelectionRange(start, end)`**: Sets the selection range of the input's text.
   ```jsx
-  const setRange = () => {
-    inputRef.current.setSelectionRange(0,
-
- 3);
+  const setSelection = () => {
+    inputRef.current.setSelectionRange(0, 5);
   };
   ```
 
-- **`checkValidity()`**: Checks if the input's value meets the constraints set by the `required`, `minLength`, `maxLength`, etc.
+- **`checkValidity()`**: Checks if the input's value meets the constraints set by attributes like `required`, `minLength`, etc.
   ```jsx
   const checkInputValidity = () => {
     if (!inputRef.current.checkValidity()) {
