@@ -1,56 +1,44 @@
-# Date Input
+# Date Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected date.
-- `onChange`: Updates state.
-- `type="date"`: Provides a date picker.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., date).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `min`: Specifies the earliest date.
-- `max`: Specifies the latest date.
-- `placeholder`: Provides a hint to the user.
+- `min`: Specifies the earliest date allowed.
+- `max`: Specifies the latest date allowed.
 
-# DateInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const DateInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const DateInputSchema = Yup.object().shape({
+  dateInput: Yup.date().required('Required'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const DateInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ dateInput: '' }}
+    validationSchema={DateInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="dateInput">Date Input:</label>
+        <Field
+          type="date"
+          id="dateInput"
+          name="dateInput"
+        />
+        <ErrorMessage name="dateInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="dateInput">Date Input:</label>
-      <input
-        type="date"
-        id="dateInput"
-        name="dateInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select date"
-        min="2000-01-01"
-        max="2099-12-31"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default DateInput;
+export default DateInputForm;

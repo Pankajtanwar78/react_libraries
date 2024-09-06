@@ -1,52 +1,44 @@
-# Color Input
+# Color Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected color.
-- `onChange`: Updates state.
-- `type="color"`: Provides a color picker.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., color).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
+- `value`: Sets the initial color value.
+- `onChange`: Handles color change events.
 
-# ColorInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const ColorInput: React.FC = () => {
-  const [value, setValue] = useState<string>('#ff0000');
-  const [error, setError] = useState<string | null>(null);
+const ColorInputSchema = Yup.object().shape({
+  colorInput: Yup.string().required('Required'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const ColorInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ colorInput: '#000000' }}
+    validationSchema={ColorInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="colorInput">Color Input:</label>
+        <Field
+          type="color"
+          id="colorInput"
+          name="colorInput"
+        />
+        <ErrorMessage name="colorInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (!/^#[0-9a-fA-F]{6}$/.test(value)) {
-      setError('Please enter a valid hex color.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="colorInput">Color Input:</label>
-      <input
-        type="color"
-        id="colorInput"
-        name="colorInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select color"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default ColorInput;
+export default ColorInputForm;

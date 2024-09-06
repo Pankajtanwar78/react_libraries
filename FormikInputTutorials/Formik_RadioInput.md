@@ -1,60 +1,49 @@
-# Radio Input
+# Radio Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with radio button.
-- `name`: Groups radio buttons together.
-- `value`: Specifies the value of the radio button.
-- `checked`: Controls the selected state of the radio button.
-- `onChange`: Updates state.
-- `type="radio"`: Provides a radio button input.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., radio).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `disabled`: Disables the radio button.
+- `value`: Sets the value of the radio button.
+- `checked`: Sets the initial checked state.
+- `onChange`: Handles radio change events.
 
-# RadioInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-interface RadioInputProps {
-  options: { id: string; name: string; value: string; checked: boolean; disabled?: boolean }[];
-}
+const RadioInputSchema = Yup.object().shape({
+  radioInput: Yup.string().required('Required'),
+});
 
-const RadioInput: React.FC<RadioInputProps> = ({ options }) => {
-  const [selectedValue, setSelectedValue] = useState<string>(options.find(option => option.checked)?.value || '');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-  };
-
-  const handleBlur = () => {
-    // Optional: Implement specific validation or checks if needed
-  };
-
-  return (
-    <div>
-      {options.map((option) => (
-        <div key={option.id}>
-          <label>
-            <input
+const RadioInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ radioInput: '' }}
+    validationSchema={RadioInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        {['option1', 'option2', 'option3'].map(option => (
+          <label key={option}>
+            <Field
               type="radio"
-              id={option.id}
-              name="radioGroup"
-              value={option.value}
-              checked={selectedValue === option.value}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              disabled={option.disabled}
+              name="radioInput"
+              value={option}
             />
-            {option.name}
+            {`Option ${option.charAt(option.length - 1)}`}
           </label>
-        </div>
-      ))}
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
+        ))}
+        <ErrorMessage name="radioInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-export default RadioInput;
+export default RadioInputForm;

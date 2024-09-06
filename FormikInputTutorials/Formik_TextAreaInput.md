@@ -1,55 +1,47 @@
-# Textarea Input
+# Text Area Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with textarea.
-- `name`: For form submission.
-- `value`: Controls textarea value.
-- `onChange`: Updates state.
-- `rows`: Specifies the number of visible text lines.
-- `onBlur`: Handles focus loss event.
+- `id`: Associates the label with the text area.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
-- `cols`: Specifies the visible width of the textarea.
-- `maxLength`: Limits the number of characters.
+- `rows`: Specifies the number of rows in the text area.
+- `cols`: Specifies the number of columns in the text area.
+- `placeholder`: Provides a hint to the user about the expected input.
 
-# TextareaInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const TextareaInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const TextAreaInputSchema = Yup.object().shape({
+  textAreaInput: Yup.string().required('Required'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
-  };
+const TextAreaInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ textAreaInput: '' }}
+    validationSchema={TextAreaInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="textAreaInput">Text Area Input:</label>
+        <Field
+          as="textarea"
+          id="textAreaInput"
+          name="textAreaInput"
+          rows={4}
+          cols={50}
+          placeholder="Enter your text here"
+        />
+        <ErrorMessage name="textAreaInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="textareaInput">Textarea Input:</label>
-      <textarea
-        id="textareaInput"
-        name="textareaInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        rows={4}
-        placeholder="Enter text"
-        maxLength={500}
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default TextareaInput;
+export default TextAreaInputForm;

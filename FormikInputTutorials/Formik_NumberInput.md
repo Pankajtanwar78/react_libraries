@@ -1,65 +1,48 @@
-# Number Input
+# Number Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls input value.
-- `onChange`: Updates state.
-- `type="number"`: Ensures numeric input.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., number).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user about the expected value.
-- `min`: Specifies the minimum value.
-- `max`: Specifies the maximum value.
-- `step`: Defines the step size for increments.
+- `min`: Specifies the minimum value allowed.
+- `max`: Specifies the maximum value allowed.
+- `step`: Specifies the step size for the input.
 
-# NumberInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const NumberInput: React.FC = () => {
-  const [value, setValue] = useState<number | ''>('');
-  const [error, setError] = useState<string | null>(null);
+const NumberInputSchema = Yup.object().shape({
+  numberInput: Yup.number().required('Required').min(1, 'Value must be at least 1').max(100, 'Value must be at most 100'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.valueAsNumber;
-    if (!isNaN(newValue)) {
-      setValue(newValue);
-      setError(null);
-    } else {
-      setError('Please enter a valid number.');
-    }
-  };
+const NumberInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ numberInput: '' }}
+    validationSchema={NumberInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="numberInput">Number Input:</label>
+        <Field
+          type="number"
+          id="numberInput"
+          name="numberInput"
+          min={1}
+          max={100}
+          step={1}
+        />
+        <ErrorMessage name="numberInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (value === '' || isNaN(value)) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="numberInput">Number Input:</label>
-      <input
-        type="number"
-        id="numberInput"
-        name="numberInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter number"
-        min={0}
-        max={100}
-        step={1}
-        required
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default NumberInput;
+export default NumberInputForm;

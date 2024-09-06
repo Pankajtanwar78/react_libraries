@@ -1,56 +1,44 @@
-# Time Input
+# Time Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected time.
-- `onChange`: Updates state.
-- `type="time"`: Provides a time picker.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., time).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `min`: Specifies the earliest time.
-- `max`: Specifies the latest time.
-- `placeholder`: Provides a hint to the user.
+- `min`: Specifies the earliest time allowed.
+- `max`: Specifies the latest time allowed.
 
-# TimeInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const TimeInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const TimeInputSchema = Yup.object().shape({
+  timeInput: Yup.string().required('Required'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const TimeInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ timeInput: '' }}
+    validationSchema={TimeInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="timeInput">Time Input:</label>
+        <Field
+          type="time"
+          id="timeInput"
+          name="timeInput"
+        />
+        <ErrorMessage name="timeInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="timeInput">Time Input:</label>
-      <input
-        type="time"
-        id="timeInput"
-        name="timeInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select time"
-        min="00:00"
-        max="23:59"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default TimeInput;
+export default TimeInputForm;

@@ -1,58 +1,45 @@
-# File Input
+# File Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `onChange`: Updates state when file is selected.
-- `type="file"`: Allows file selection.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., file).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `accept`: Specifies acceptable file types.
-- `multiple`: Allows selection of multiple files.
+- `accept`: Specifies the types of files that the server accepts.
+- `multiple`: Allows multiple files to be selected.
 
-# FileInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const FileInput: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
+const FileInputSchema = Yup.object().shape({
+  fileInput: Yup.mixed().required('Required'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files ? event.target.files[0] : null;
-    if (selectedFile) {
-      setFile(selectedFile);
-      setError(null);
-    } else {
-      setError('No file selected.');
-    }
-  };
+const FileInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ fileInput: null }}
+    validationSchema={FileInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="fileInput">File Input:</label>
+        <Field
+          type="file"
+          id="fileInput"
+          name="fileInput"
+          accept=".jpg,.png"
+        />
+        <ErrorMessage name="fileInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (!file) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="fileInput">File Input:</label>
-      <input
-        type="file"
-        id="fileInput"
-        name="fileInput"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        accept=".jpg,.png,.pdf"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-      {file && <p>Selected file: {file.name}</p>}
-    </div>
-  );
-};
-
-export default FileInput;
+export default FileInputForm;

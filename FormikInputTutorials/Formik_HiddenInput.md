@@ -1,32 +1,39 @@
-# Hidden Input
+# Hidden Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input (for accessibility, although hidden inputs don't display).
-- `name`: For form submission.
-- `value`: Controls hidden input value.
+- `type`: Specifies the type of input (e.g., hidden).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `defaultValue`: Sets the initial value.
+- `value`: Specifies the value of the hidden input.
 
-# HiddenInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form } from 'formik';
+import * as Yup from 'yup';
 
-const HiddenInput: React.FC = () => {
-  const [value, setValue] = useState<string>('hiddenValue');
+const HiddenInputSchema = Yup.object().shape({
+  hiddenInput: Yup.string().required('Required'),
+});
 
-  return (
-    <div>
-      <label htmlFor="hiddenInput" style={{ display: 'none' }}>Hidden Input:</label>
-      <input
+const HiddenInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ hiddenInput: 'hiddenValue' }}
+    validationSchema={HiddenInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <Field
         type="hidden"
         id="hiddenInput"
         name="hiddenInput"
-        value={value}
       />
-    </div>
-  );
-};
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-export default HiddenInput;
+export default HiddenInputForm;

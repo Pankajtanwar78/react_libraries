@@ -1,58 +1,47 @@
-# Password Input
+# Password Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls input value.
-- `onChange`: Updates state.
-- `type="password"`: Provides a password input field.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., password).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user about the expected value.
-- `required`: Marks the field as mandatory.
-- `minLength`: Requires a minimum number of characters.
-- `maxLength`: Limits the number of characters.
+- `placeholder`: Provides a hint to the user about the expected input.
+- `minLength`: Specifies the minimum length of the password.
+- `maxLength`: Limits the number of characters that can be entered.
 
-# PasswordInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const PasswordInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const PasswordInputSchema = Yup.object().shape({
+  password: Yup.string().required('Required').min(8, 'Password must be at least 8 characters long'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const PasswordInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ password: '' }}
+    validationSchema={PasswordInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <Field
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter password"
+          minLength={8}
+        />
+        <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (value.length < 6) {
-      setError('Password must be at least 6 characters long.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="passwordInput">Password Input:</label>
-      <input
-        type="password"
-        id="passwordInput"
-        name="passwordInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter password"
-        required
-        minLength={6}
-        maxLength={20}
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default PasswordInput;
+export default PasswordInputForm;

@@ -1,56 +1,44 @@
-# Month Input
+# Month Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls selected month.
-- `onChange`: Updates state.
-- `type="month"`: Provides a month picker.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., month).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `min`: Specifies the earliest month.
-- `max`: Specifies the latest month.
-- `placeholder`: Provides a hint to the user.
+- `min`: Specifies the earliest month that can be selected.
+- `max`: Specifies the latest month that can be selected.
 
-# MonthInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const MonthInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const MonthInputSchema = Yup.object().shape({
+  monthInput: Yup.string().required('Required'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const MonthInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ monthInput: '' }}
+    validationSchema={MonthInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="monthInput">Month Input:</label>
+        <Field
+          type="month"
+          id="monthInput"
+          name="monthInput"
+        />
+        <ErrorMessage name="monthInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (!value) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="monthInput">Month Input:</label>
-      <input
-        type="month"
-        id="monthInput"
-        name="monthInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select month"
-        min="2020-01"
-        max="2099-12"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default MonthInput;
+export default MonthInputForm;

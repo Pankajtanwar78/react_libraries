@@ -1,58 +1,46 @@
-# Text Input
+# Text Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls input value.
-- `onChange`: Updates state.
-- `type="text"`: Provides a text input field.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., text).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user about the expected value.
-- `required`: Marks the field as mandatory.
-- `maxLength`: Limits the number of characters.
-- `minLength`: Requires a minimum number of characters.
+- `placeholder`: Provides a hint to the user about the expected input.
+- `maxLength`: Limits the number of characters that can be entered.
 
-# TextInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const TextInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const TextInputSchema = Yup.object().shape({
+  textInput: Yup.string().required('Required').max(100, 'Input exceeds maximum length of 100 characters.'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const TextInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ textInput: '' }}
+    validationSchema={TextInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="textInput">Text Input:</label>
+        <Field
+          type="text"
+          id="textInput"
+          name="textInput"
+          placeholder="Enter text"
+          maxLength={100}
+        />
+        <ErrorMessage name="textInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (value.trim() === '') {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="textInput">Text Input:</label>
-      <input
-        type="text"
-        id="textInput"
-        name="textInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter text"
-        required
-        maxLength={100}
-        minLength={3}
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default TextInput;
+export default TextInputForm;

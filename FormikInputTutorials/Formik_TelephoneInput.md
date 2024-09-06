@@ -1,55 +1,47 @@
-# Telephone Input
+# Telephone Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls phone number input.
-- `onChange`: Updates state.
-- `type="tel"`: Provides a telephone input field.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., tel).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
-- `pattern`: Specifies a regex pattern for validation.
+- `placeholder`: Provides a hint to the user about the expected format.
+- `pattern`: Specifies a pattern for the input (e.g., phone number format).
 
-# TelephoneInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const TelephoneInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const TelephoneInputSchema = Yup.object().shape({
+  telephoneInput: Yup.string()
+    .required('Required')
+    .matches(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const TelephoneInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ telephoneInput: '' }}
+    validationSchema={TelephoneInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="telephoneInput">Telephone Input:</label>
+        <Field
+          type="tel"
+          id="telephoneInput"
+          name="telephoneInput"
+          placeholder="Enter your phone number"
+        />
+        <ErrorMessage name="telephoneInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    const phoneRegex = /^[0-9]{10}$/; // Example: 10-digit phone number
-    if (!phoneRegex.test(value)) {
-      setError('Please enter a valid phone number.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="telephoneInput">Telephone Input:</label>
-      <input
-        type="tel"
-        id="telephoneInput"
-        name="telephoneInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter phone number"
-        pattern="[0-9]{10}"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default TelephoneInput;
+export default TelephoneInputForm;

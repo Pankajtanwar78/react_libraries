@@ -1,57 +1,45 @@
-# Email Input
+# Email Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls input value.
-- `onChange`: Updates state.
-- `type="email"`: Ensures valid email format.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., email).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user about the expected value.
-- `required`: Marks the field as mandatory.
-- `pattern`: Defines a regular expression for validation.
+- `placeholder`: Provides a hint to the user about the expected input.
+- `pattern`: Specifies a regular expression for email validation.
 
-# EmailInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const EmailInput: React.FC = () => {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const EmailInputSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email address').required('Required'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+const EmailInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ email: '' }}
+    validationSchema={EmailInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <Field
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter email"
+        />
+        <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(value)) {
-      setError('Invalid email address.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="emailInput">Email Input:</label>
-      <input
-        type="email"
-        id="emailInput"
-        name="emailInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Enter email"
-        required
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-      />
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default EmailInput;
+export default EmailInputForm;

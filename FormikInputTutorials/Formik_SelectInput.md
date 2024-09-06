@@ -1,67 +1,52 @@
-
-### Select Input
-
-```markdown
-# Select Input
+# Select Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with select input.
-- `name`: For form submission.
-- `value`: Controls the selected option.
-- `onChange`: Updates state.
-- `onBlur`: Handles focus loss event.
+- `as`: Specifies the type of input (e.g., select).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user.
-- `disabled`: Disables the select input.
+- `value`: Sets the initial value of the select input.
+- `onChange`: Handles select change events.
+- `onBlur`: Handles blur events.
 
-# SelectInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-interface SelectInputProps {
-  options: { value: string; label: string; disabled?: boolean }[];
-}
+const SelectInputSchema = Yup.object().shape({
+  selectInput: Yup.string().required('Required'),
+});
 
-const SelectInput: React.FC<SelectInputProps> = ({ options }) => {
-  const [selectedValue, setSelectedValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const options = [
+  { value: '', label: 'Select an option' },
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Option 3' },
+];
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedValue(event.target.value);
-  };
+const SelectInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ selectInput: '' }}
+    validationSchema={SelectInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="selectInput">Select Input:</label>
+        <Field as="select" id="selectInput" name="selectInput">
+          {options.map(option => (
+            <option key={option.value} value={option.value} label={option.label} />
+          ))}
+        </Field>
+        <ErrorMessage name="selectInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (!selectedValue) {
-      setError('This field is required.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="selectInput">Select Input:</label>
-      <select
-        id="selectInput"
-        name="selectInput"
-        value={selectedValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        placeholder="Select an option"
-        disabled={false} // Example of disabled field
-      >
-        <option value="" disabled>Select an option</option>
-        {options.map((option) => (
-          <option key={option.value} value={option.value} disabled={option.disabled}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default SelectInput;
+export default SelectInputForm;

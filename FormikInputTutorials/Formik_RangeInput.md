@@ -1,64 +1,48 @@
-# Range Input
+# Range Input Formik Component
 
 **Mandatory Fields:**
-- `id`: Associates label with input.
-- `name`: For form submission.
-- `value`: Controls slider position.
-- `onChange`: Updates state.
-- `type="range"`: Provides a slider.
-- `onBlur`: Handles focus loss event.
+- `type`: Specifies the type of input (e.g., range).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `min`: Specifies the minimum value.
-- `max`: Specifies the maximum value.
-- `step`: Defines the step size for increments.
-- `defaultValue`: Sets the initial value.
+- `min`: Specifies the minimum value allowed.
+- `max`: Specifies the maximum value allowed.
+- `step`: Specifies the step size for the input.
 
-# RangeInput.tsx
+## Code
 
 ```typescript
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const RangeInput: React.FC = () => {
-  const [value, setValue] = useState<number>(50);
-  const [error, setError] = useState<string | null>(null);
+const RangeInputSchema = Yup.object().shape({
+  rangeInput: Yup.number().required('Required').min(0, 'Value must be at least 0').max(100, 'Value must be at most 100'),
+});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.valueAsNumber;
-    if (newValue >= 0 && newValue <= 100) {
-      setValue(newValue);
-      setError(null);
-    } else {
-      setError('Value out of range.');
-    }
-  };
+const RangeInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ rangeInput: 50 }}
+    validationSchema={RangeInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="rangeInput">Range Input:</label>
+        <Field
+          type="range"
+          id="rangeInput"
+          name="rangeInput"
+          min={0}
+          max={100}
+          step={1}
+        />
+        <ErrorMessage name="rangeInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
 
-  const handleBlur = () => {
-    if (value < 0 || value > 100) {
-      setError('Value must be between 0 and 100.');
-    } else {
-      setError(null);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor="rangeInput">Range Input:</label>
-      <input
-        type="range"
-        id="rangeInput"
-        name="rangeInput"
-        value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        min={0}
-        max={100}
-        step={1}
-      />
-      <span>{value}</span>
-      {error && <span style={{ color: 'red' }}>{error}</span>}
-    </div>
-  );
-};
-
-export default RangeInput;
+export default RangeInputForm;
