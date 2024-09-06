@@ -100,11 +100,6 @@ HTML `<input>` elements come with a variety of attributes that control their beh
 - **Description**: Defines a regex pattern the input value must match.
 - **Usage**: For custom validation constraints.
 
-## Summary
-
-- **Automatic Management**: Formik automatically manages the following properties: `value`, `onChange`, `onBlur`, and `ref`.
-- **Explicitly Provided**: For proper rendering and functionality, you need to explicitly provide `name`, `type`, and optionally `id`.
-
 
 
 
