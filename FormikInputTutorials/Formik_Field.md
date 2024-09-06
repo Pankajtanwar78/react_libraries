@@ -82,3 +82,6 @@ export default MyForm;
 
 - **Automatic Management**: Formik automatically manages `value`, `onChange`, `onBlur`, and `ref` for fields.
 - **Explicitly Provided**: You need to explicitly provide `name`, `type`, and `id` for proper rendering and functionality.
+
+
+![image](https://github.com/user-attachments/assets/4f209f2d-3fe1-49b4-8141-5be2ca519d31)
