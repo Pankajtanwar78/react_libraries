@@ -1,6 +1,3 @@
-Certainly! Here's a comprehensive guide to `<input>` elements in React, covering properties, events, methods, and state management.
-
-```markdown
 # Comprehensive Guide to `<input>` Elements in React
 
 ## Introduction
