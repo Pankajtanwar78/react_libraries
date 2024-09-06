@@ -496,10 +496,6 @@ export default RadioInput;
 
 
 
-
-### Select Input
-
-```markdown
 # Select Input
 
 **Mandatory Fields:**
