@@ -89,6 +89,7 @@ export default MyForm;
 
 
 
+
 # Text Input Formik Component
 
 **Mandatory Fields:**
@@ -134,8 +135,8 @@ const TextInputForm: React.FC = () => (
   </Formik>
 );
 
-export default TextInputForm;
-```
+export default TextInputForm;```
+
 
 
 
@@ -183,8 +184,8 @@ const EmailInputForm: React.FC = () => (
   </Formik>
 );
 
-export default EmailInputForm;
-```
+export default EmailInputForm;```
+
 
 
 
@@ -234,8 +235,8 @@ const PasswordInputForm: React.FC = () => (
   </Formik>
 );
 
-export default PasswordInputForm;
-```
+export default PasswordInputForm;```
+
 
 
 
@@ -286,8 +287,8 @@ const NumberInputForm: React.FC = () => (
   </Formik>
 );
 
-export default NumberInputForm;
-```
+export default NumberInputForm;```
+
 
 
 
@@ -358,241 +359,6 @@ export default CheckboxInputForm;
 
 
 
-# Color Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., color).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `value`: Sets the initial color value.
-- `onChange`: Handles color change events.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const ColorInputSchema = Yup.object().shape({
-  colorInput: Yup.string().required('Required'),
-});
-
-const ColorInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ colorInput: '#000000' }}
-    validationSchema={ColorInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="colorInput">Color Input:</label>
-        <Field
-          type="color"
-          id="colorInput"
-          name="colorInput"
-        />
-        <ErrorMessage name="colorInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default ColorInputForm;
-```
-
-
-
-# Date Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., date).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the earliest date allowed.
-- `max`: Specifies the latest date allowed.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const DateInputSchema = Yup.object().shape({
-  dateInput: Yup.date().required('Required'),
-});
-
-const DateInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ dateInput: '' }}
-    validationSchema={DateInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="dateInput">Date Input:</label>
-        <Field
-          type="date"
-          id="dateInput"
-          name="dateInput"
-        />
-        <ErrorMessage name="dateInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default DateInputForm;
-```
-
-
-
-# File Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., file).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `accept`: Specifies the types of files that the server accepts.
-- `multiple`: Allows multiple files to be selected.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const FileInputSchema = Yup.object().shape({
-  fileInput: Yup.mixed().required('Required'),
-});
-
-const FileInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ fileInput: null }}
-    validationSchema={FileInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="fileInput">File Input:</label>
-        <Field
-          type="file"
-          id="fileInput"
-          name="fileInput"
-          accept=".jpg,.png"
-        />
-        <ErrorMessage name="fileInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default FileInputForm;
-```
-
-
-
-# Hidden Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., hidden).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `value`: Specifies the value of the hidden input.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
-
-const HiddenInputSchema = Yup.object().shape({
-  hiddenInput: Yup.string().required('Required'),
-});
-
-const HiddenInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ hiddenInput: 'hiddenValue' }}
-    validationSchema={HiddenInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <Field
-        type="hidden"
-        id="hiddenInput"
-        name="hiddenInput"
-      />
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default HiddenInputForm;
-```
-
-
-
-# Month Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., month).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the earliest month that can be selected.
-- `max`: Specifies the latest month that can be selected.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const MonthInputSchema = Yup.object().shape({
-  monthInput: Yup.string().required('Required'),
-});
-
-const MonthInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ monthInput: '' }}
-    validationSchema={MonthInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="monthInput">Month Input:</label>
-        <Field
-          type="month"
-          id="monthInput"
-          name="monthInput"
-        />
-        <ErrorMessage name="monthInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default MonthInputForm;
-```
-
-
 
 # Radio Input Formik Component
 
@@ -642,108 +408,8 @@ const RadioInputForm: React.FC = () => (
   </Formik>
 );
 
-export default RadioInputForm;
-```
+export default RadioInputForm;```
 
-
-
-# Range Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., range).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the minimum value allowed.
-- `max`: Specifies the maximum value allowed.
-- `step`: Specifies the step size for the input.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const RangeInputSchema = Yup.object().shape({
-  rangeInput: Yup.number().required('Required').min(0, 'Value must be at least 0').max(100, 'Value must be at most 100'),
-});
-
-const RangeInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ rangeInput: 50 }}
-    validationSchema={RangeInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="rangeInput">Range Input:</label>
-        <Field
-          type="range"
-          id="rangeInput"
-          name="rangeInput"
-          min={0}
-          max={100}
-          step={1}
-        />
-        <ErrorMessage name="rangeInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default RangeInputForm;
-```
-
-
-
-# Search Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., search).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `placeholder`: Provides a hint to the user about the expected input.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const SearchInputSchema = Yup.object().shape({
-  searchInput: Yup.string().required('Required'),
-});
-
-const SearchInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ searchInput: '' }}
-    validationSchema={SearchInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="searchInput">Search Input:</label>
-        <Field
-          type="search"
-          id="searchInput"
-          name="searchInput"
-          placeholder="Search..."
-        />
-        <ErrorMessage name="searchInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default SearchInputForm;
-```
 
 
 
@@ -798,8 +464,448 @@ const SelectInputForm: React.FC = () => (
   </Formik>
 );
 
-export default SelectInputForm;
-```
+export default SelectInputForm;```
+
+
+
+
+# Text Area Input Formik Component
+
+**Mandatory Fields:**
+- `id`: Associates the label with the text area.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `rows`: Specifies the number of rows in the text area.
+- `cols`: Specifies the number of columns in the text area.
+- `placeholder`: Provides a hint to the user about the expected input.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const TextAreaInputSchema = Yup.object().shape({
+  textAreaInput: Yup.string().required('Required'),
+});
+
+const TextAreaInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ textAreaInput: '' }}
+    validationSchema={TextAreaInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="textAreaInput">Text Area Input:</label>
+        <Field
+          as="textarea"
+          id="textAreaInput"
+          name="textAreaInput"
+          rows={4}
+          cols={50}
+          placeholder="Enter your text here"
+        />
+        <ErrorMessage name="textAreaInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default TextAreaInputForm;```
+
+
+
+
+# Date Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., date).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest date allowed.
+- `max`: Specifies the latest date allowed.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const DateInputSchema = Yup.object().shape({
+  dateInput: Yup.date().required('Required'),
+});
+
+const DateInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ dateInput: '' }}
+    validationSchema={DateInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="dateInput">Date Input:</label>
+        <Field
+          type="date"
+          id="dateInput"
+          name="dateInput"
+        />
+        <ErrorMessage name="dateInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default DateInputForm;```
+
+
+
+
+# Range Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., range).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the minimum value allowed.
+- `max`: Specifies the maximum value allowed.
+- `step`: Specifies the step size for the input.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const RangeInputSchema = Yup.object().shape({
+  rangeInput: Yup.number().required('Required').min(0, 'Value must be at least 0').max(100, 'Value must be at most 100'),
+});
+
+const RangeInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ rangeInput: 50 }}
+    validationSchema={RangeInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="rangeInput">Range Input:</label>
+        <Field
+          type="range"
+          id="rangeInput"
+          name="rangeInput"
+          min={0}
+          max={100}
+          step={1}
+        />
+        <ErrorMessage name="rangeInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default RangeInputForm;```
+
+
+
+
+# Search Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., search).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `placeholder`: Provides a hint to the user about the expected input.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const SearchInputSchema = Yup.object().shape({
+  searchInput: Yup.string().required('Required'),
+});
+
+const SearchInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ searchInput: '' }}
+    validationSchema={SearchInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="searchInput">Search Input:</label>
+        <Field
+          type="search"
+          id="searchInput"
+          name="searchInput"
+          placeholder="Search..."
+        />
+        <ErrorMessage name="searchInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default SearchInputForm;```
+
+
+
+
+# Time Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., time).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest time allowed.
+- `max`: Specifies the latest time allowed.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const TimeInputSchema = Yup.object().shape({
+  timeInput: Yup.string().required('Required'),
+});
+
+const TimeInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ timeInput: '' }}
+    validationSchema={TimeInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="timeInput">Time Input:</label>
+        <Field
+          type="time"
+          id="timeInput"
+          name="timeInput"
+        />
+        <ErrorMessage name="timeInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default TimeInputForm;```
+
+
+
+
+# Color Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., color).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `value`: Sets the initial color value.
+- `onChange`: Handles color change events.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const ColorInputSchema = Yup.object().shape({
+  colorInput: Yup.string().required('Required'),
+});
+
+const ColorInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ colorInput: '#000000' }}
+    validationSchema={ColorInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="colorInput">Color Input:</label>
+        <Field
+          type="color"
+          id="colorInput"
+          name="colorInput"
+        />
+        <ErrorMessage name="colorInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default ColorInputForm;```
+
+
+
+
+# File Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., file).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `accept`: Specifies the types of files that the server accepts.
+- `multiple`: Allows multiple files to be selected.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const FileInputSchema = Yup.object().shape({
+  fileInput: Yup.mixed().required('Required'),
+});
+
+const FileInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ fileInput: null }}
+    validationSchema={FileInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="fileInput">File Input:</label>
+        <Field
+          type="file"
+          id="fileInput"
+          name="fileInput"
+          accept=".jpg,.png"
+        />
+        <ErrorMessage name="fileInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default FileInputForm;```
+
+
+
+
+# Month Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., month).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest month that can be selected.
+- `max`: Specifies the latest month that can be selected.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const MonthInputSchema = Yup.object().shape({
+  monthInput: Yup.string().required('Required'),
+});
+
+const MonthInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ monthInput: '' }}
+    validationSchema={MonthInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="monthInput">Month Input:</label>
+        <Field
+          type="month"
+          id="monthInput"
+          name="monthInput"
+        />
+        <ErrorMessage name="monthInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default MonthInputForm;```
+
+
+
+
+# Week Input Formik Component
+
+**Mandatory Fields:**
+- `type`: Specifies the type of input (e.g., week).
+- `id`: Associates the label with the input field.
+- `name`: Used for form submission and to link with Formik state.
+
+**Nice-to-Have Fields:**
+- `min`: Specifies the earliest week that can be selected.
+- `max`: Specifies the latest week that can be selected.
+
+## Code
+
+```typescript
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+const WeekInputSchema = Yup.object().shape({
+  weekInput: Yup.date().required('Required'),
+});
+
+const WeekInputForm: React.FC = () => (
+  <Formik
+    initialValues={{ weekInput: '' }}
+    validationSchema={WeekInputSchema}
+    onSubmit={(values) => console.log(values)}
+  >
+    <Form>
+      <div>
+        <label htmlFor="weekInput">Week Input:</label>
+        <Field
+          type="week"
+          id="weekInput"
+          name="weekInput"
+        />
+        <ErrorMessage name="weekInput" component="div" style={{ color: 'red' }} />
+      </div>
+      <button type="submit">Submit</button>
+    </Form>
+  </Formik>
+);
+
+export default WeekInputForm;```
+
 
 
 
@@ -854,102 +960,6 @@ export default TelephoneInputForm;
 
 
 
-# Text Area Input Formik Component
-
-**Mandatory Fields:**
-- `id`: Associates the label with the text area.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `rows`: Specifies the number of rows in the text area.
-- `cols`: Specifies the number of columns in the text area.
-- `placeholder`: Provides a hint to the user about the expected input.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const TextAreaInputSchema = Yup.object().shape({
-  textAreaInput: Yup.string().required('Required'),
-});
-
-const TextAreaInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ textAreaInput: '' }}
-    validationSchema={TextAreaInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="textAreaInput">Text Area Input:</label>
-        <Field
-          as="textarea"
-          id="textAreaInput"
-          name="textAreaInput"
-          rows={4}
-          cols={50}
-          placeholder="Enter your text here"
-        />
-        <ErrorMessage name="textAreaInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default TextAreaInputForm;
-```
-
-
-# Time Input Formik Component
-
-**Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., time).
-- `id`: Associates the label with the input field.
-- `name`: Used for form submission and to link with Formik state.
-
-**Nice-to-Have Fields:**
-- `min`: Specifies the earliest time allowed.
-- `max`: Specifies the latest time allowed.
-
-## Code
-
-```typescript
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-const TimeInputSchema = Yup.object().shape({
-  timeInput: Yup.string().required('Required'),
-});
-
-const TimeInputForm: React.FC = () => (
-  <Formik
-    initialValues={{ timeInput: '' }}
-    validationSchema={TimeInputSchema}
-    onSubmit={(values) => console.log(values)}
-  >
-    <Form>
-      <div>
-        <label htmlFor="timeInput">Time Input:</label>
-        <Field
-          type="time"
-          id="timeInput"
-          name="timeInput"
-        />
-        <ErrorMessage name="timeInput" component="div" style={{ color: 'red' }} />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  </Formik>
-);
-
-export default TimeInputForm;
-```
-
 
 # URL Input Formik Component
 
@@ -995,55 +1005,48 @@ const UrlInputForm: React.FC = () => (
   </Formik>
 );
 
-export default UrlInputForm;
-```
+export default UrlInputForm;```
 
 
 
-# Week Input Formik Component
+
+# Hidden Input Formik Component
 
 **Mandatory Fields:**
-- `type`: Specifies the type of input (e.g., week).
+- `type`: Specifies the type of input (e.g., hidden).
 - `id`: Associates the label with the input field.
 - `name`: Used for form submission and to link with Formik state.
 
 **Nice-to-Have Fields:**
-- `min`: Specifies the earliest week that can be selected.
-- `max`: Specifies the latest week that can be selected.
+- `value`: Specifies the value of the hidden input.
 
 ## Code
 
 ```typescript
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
-const WeekInputSchema = Yup.object().shape({
-  weekInput: Yup.date().required('Required'),
+const HiddenInputSchema = Yup.object().shape({
+  hiddenInput: Yup.string().required('Required'),
 });
 
-const WeekInputForm: React.FC = () => (
+const HiddenInputForm: React.FC = () => (
   <Formik
-    initialValues={{ weekInput: '' }}
-    validationSchema={WeekInputSchema}
+    initialValues={{ hiddenInput: 'hiddenValue' }}
+    validationSchema={HiddenInputSchema}
     onSubmit={(values) => console.log(values)}
   >
     <Form>
-      <div>
-        <label htmlFor="weekInput">Week Input:</label>
-        <Field
-          type="week"
-          id="weekInput"
-          name="weekInput"
-        />
-        <ErrorMessage name="weekInput" component="div" style={{ color: 'red' }} />
-      </div>
+      <Field
+        type="hidden"
+        id="hiddenInput"
+        name="hiddenInput"
+      />
       <button type="submit">Submit</button>
     </Form>
   </Formik>
 );
 
-export default WeekInputForm;
+export default HiddenInputForm;
 ```
-
-
