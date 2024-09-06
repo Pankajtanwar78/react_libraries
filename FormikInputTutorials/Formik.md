@@ -87,10 +87,9 @@ export default MyForm;
 ![image](https://github.com/user-attachments/assets/4f209f2d-3fe1-49b4-8141-5be2ca519d31)
 
 
+## `ErrorMessage` Component in Formik
 
 In Formik, the `ErrorMessage` component is used to display validation error messages for form fields. It provides a simple way to show error messages based on the validation schema or field-specific validation rules. Here's an in-depth look at how it works and how to use it:
-
-## `ErrorMessage` Component in Formik
 
 ### Overview
 
